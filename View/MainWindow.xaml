@@ -1,0 +1,245 @@
+﻿<adonisControls:AdonisWindow x:Class="Modbus.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Modbus"
+        xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
+        xmlns:adonisControls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
+        xmlns:adonisExtensions="clr-namespace:AdonisUI.Extensions;assembly=AdonisUI"
+        mc:Ignorable="d"
+        xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
+        Icon="../Image/rs-485.png"
+        Title="SerialPort RS-485" Height="450" Width="800"
+        adonisExtensions:CursorSpotlightExtension.RelativeSpotlightSize="0.25">
+    <Window.Resources>
+        <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style x:Key="ComboBoxStyle" TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+            <Setter Property="Width" Value="140"/>
+            <Setter Property="Margin" Value="7"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style x:Key="TextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="Width" Value="140"/>
+            <Setter Property="Margin" Value="7"/>
+            <Setter Property="MaxHeight" Value="30"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style x:Key="ToggleButtonStyle" TargetType="ToggleButton" BasedOn="{StaticResource {x:Type ToggleButton}}">
+            <Setter Property="Width" Value="140"/>
+            <Setter Property="Margin" Value="7"/>
+            <Setter Property="MaxHeight" Value="30"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style x:Key="GridParamsStyle" TargetType="Grid">
+            <Setter Property="Margin" Value="0,0,0,7"/>
+        </Style>
+    </Window.Resources>
+    <Grid Background="#525266">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Menu VerticalAlignment="Top" Grid.ColumnSpan="2">
+            <MenuItem Header="Modbus устройства" Icon="1" Click="ListDevicesItem_Click"/>
+            <MenuItem Header="COM порты"         Icon="2">
+                <MenuItem Header="Конфигурирование" Click="ConfigureComPortsItem_Click"/>
+                <MenuItem Header="Обновить список портов" Click="ReloadComPorts_Click"/>
+            </MenuItem>
+        </Menu>
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal">
+            <ComboBox     Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding Devices}" DisplayMemberPath="Name" SelectedItem="{Binding SelectDevice}" adonisExtensions:CornerRadiusExtension.CornerRadius="5"/>
+            <ComboBox     Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding Funcs}" DisplayMemberPath="SpecificName" SelectedItem="{Binding SelectFunc}" adonisExtensions:CornerRadiusExtension.CornerRadius="5" Cursor="Hand"/>
+            <TextBox      Style="{StaticResource TextBoxStyle}" adonisExtensions:WatermarkExtension.Watermark="Частота запроса в ms" adonisExtensions:CornerRadiusExtension.CornerRadius="5"/>
+            <ToggleButton Style="{StaticResource ToggleButtonStyle}" Width="80" Content="Запустить..." adonisExtensions:CornerRadiusExtension.CornerRadius="5"/>
+        </StackPanel>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="280"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <GroupBox adonisExtensions:CornerRadiusExtension.CornerRadius="5"
+                      Margin="7">
+                <GroupBox.Header>
+                    <Label>Запрос</Label>
+                </GroupBox.Header>
+                <GroupBox.Content>
+                    <ScrollViewer>
+                        <StackPanel>
+                        <Grid Style="{StaticResource GridParamsStyle}" Visibility="{c:Binding SelectFunc.IsStartAddress}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="7"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Начальный адрес" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                            <TextBox Grid.Column="2" Text="{Binding SelectFunc.StartAddress}"/>
+                        </Grid>
+                        <Grid Style="{StaticResource GridParamsStyle}" Visibility="{c:Binding SelectFunc.IsNumberOfPoint}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="7"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Кол-во регистров" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                            <TextBox Grid.Column="2" Text="{Binding SelectFunc.NumberOfPoint}"/>
+                        </Grid>
+                        <Grid Style="{StaticResource GridParamsStyle}" Visibility="{c:Binding SelectFunc.IsCoilAddress}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="7"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Адрес регистра" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                            <TextBox Grid.Column="2" Text="{Binding SelectFunc.CoilAddress}"/>
+                        </Grid>
+                        <Grid Style="{StaticResource GridParamsStyle}" Visibility="{c:Binding SelectFunc.IsBooleanValue}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="7"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Значение для записи" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                            <CheckBox Grid.Column="2" HorizontalAlignment="Center" IsChecked="{Binding SelectFunc.BooleanValue}"/>
+                        </Grid>
+                        <Grid Style="{StaticResource GridParamsStyle}" Visibility="{c:Binding SelectFunc.IsUInt16Value}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="7"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="UInt16 для записи" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                            <TextBox Grid.Column="2" Text="{Binding SelectFunc.UInt16Value}"/>
+                        </Grid>
+                        <Grid Style="{StaticResource GridParamsStyle}" Visibility="{c:Binding SelectFunc.IsMultipleUInt16Value}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="7"/>
+                                <RowDefinition/>
+                                <RowDefinition Height="7"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Значения для записи:" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                            <GroupBox Grid.Row="2" Padding="0" BorderThickness="1">
+                                <DataGrid
+                                    AutoGenerateColumns="False"
+                                    ItemsSource="{Binding SelectFunc.MultipleUInt16Value}"
+                                    x:Name="MultipleUInt16Values"
+                                    CellEditEnding="MultipleValues_CellEditEnding">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Адрес" Binding="{Binding Path=Address}" IsReadOnly="True"/>
+                                        <DataGridTextColumn Header="UInt16" Binding="{Binding Path=Value}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </GroupBox>
+                            <StackPanel Orientation="Horizontal"
+                                        HorizontalAlignment="Right"
+                                        Grid.Row="4">
+                                <Button Content="+" Margin="0,0,5,0" Width="25" Cursor="Hand" Click="AddMassValue_Click"/>
+                                <Button Content="-" Width="25" Cursor="Hand" Click="RemoveMassValue_Click"/>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Style="{StaticResource GridParamsStyle}" Visibility="{c:Binding SelectFunc.IsMultipleBooleanValue}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="7"/>
+                                <RowDefinition/>
+                                <RowDefinition Height="7"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Значения для записи:" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                            <GroupBox Grid.Row="2" Padding="0" BorderThickness="1">
+                                <DataGrid AutoGenerateColumns="False"
+                                          ItemsSource="{Binding SelectFunc.MultipleBooleanValue}"
+                                          x:Name="MultipleBooleanValues">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Адрес" Binding="{Binding Path=Address}" IsReadOnly="True"/>
+                                        <DataGridTemplateColumn Header="Boolean">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                        <CheckBox Tag="{Binding Path=Address}" IsChecked="{Binding Path=Value}" HorizontalAlignment="Center" Click="MultipleBooleanValue_Click"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </GroupBox>
+                            <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                Grid.Row="4">
+                                <Button Content="+" Margin="0,0,5,0" Width="25" Cursor="Hand" Click="AddMassValue_Click"/>
+                                <Button Content="-" Width="25" Cursor="Hand" Click="RemoveMassValue_Click"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                    </ScrollViewer>
+                </GroupBox.Content>
+            </GroupBox>
+            <!--Результаты-->
+            <Grid Grid.Column="1" Margin="7">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal" Cursor="">
+                    <Label Content="Результат запроса: " Height="20"/>
+                    <ComboBox Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding ViewTypes}" SelectedItem="{Binding SelectViewType}" adonisExtensions:CornerRadiusExtension.CornerRadius="5" Cursor="Hand"/>
+                </StackPanel>
+                <Grid Grid.Row="1" Margin="0,0,0,4">
+                    <TextBox IsReadOnly="True" VerticalContentAlignment="Top" Text="{Binding SelectFunc.LastLogs}" Visibility="{c:Binding !IsViewTypeTable}"/>
+                    <GroupBox Padding="0" BorderThickness="1" BorderBrush="#262630" Visibility="{c:Binding IsViewTypeTable}">
+                        <DataGrid
+                            AutoGenerateColumns="False"
+                            ItemsSource="{Binding SelectFunc.TableValues}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Адрес" Binding="{Binding Path=Address}" IsReadOnly="True"/>
+                                <DataGridTextColumn Header="Значение" Binding="{Binding Path=Value}" IsReadOnly="True"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </GroupBox>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Padding="7"
+                            adonisExtensions:CornerRadiusExtension.CornerRadius="5">
+                        <Image Source="../Image/clear.png"
+                               Width="20"/>
+                    </Button>
+                    <Button Grid.Column="2"
+                            adonisExtensions:CornerRadiusExtension.CornerRadius="5"
+                            Content="Логи"
+                            Margin="0,0,7,0"/>
+                    <Button Grid.Column="3"
+                            Click="OneSendButton_Click"
+                            adonisExtensions:CornerRadiusExtension.CornerRadius="5"
+                            Content="Отправить 1 раз"
+                            Margin="0,0,7,0"/>
+                </Grid>
+            </Grid>
+        </Grid>
+        <StatusBar Grid.Row="3" Visibility="{c:Binding 'SelectDevice != null'}">
+            <StatusBarItem Content="Устройство:" FontWeight="Bold"/>
+            <StatusBarItem Content="{c:Binding SelectDevice.Name}"/>
+            <Separator Width="1"/>
+            <StatusBarItem Content="Salve ID:" FontWeight="Bold"/>
+            <StatusBarItem Content="{Binding SelectDevice.Id}"/>
+            <Separator Width="1"/>
+            <StatusBarItem Content="Порт:" FontWeight="Bold"/>
+            <StatusBarItem Content="{Binding SelectDevice.SerialPortModel.Name}"/>
+            <Separator Width="1"/>
+            <StatusBarItem Content="Битрейт:" FontWeight="Bold"/>
+            <StatusBarItem Content="{Binding SelectDevice.SerialPortModel.BaudRate}"/>
+        </StatusBar>
+    </Grid>
+</adonisControls:AdonisWindow>

@@ -1,0 +1,60 @@
+﻿<adonisControls:AdonisWindow x:Class="Modbus.View.ListDevicesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Modbus.View"
+        mc:Ignorable="d"
+        xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
+        xmlns:adonisControls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
+        xmlns:adonisExtensions="clr-namespace:AdonisUI.Extensions;assembly=AdonisUI"
+        Title="Список устройств"
+        MinHeight="250" MinWidth="300"
+        MaxHeight="250" MaxWidth="300" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow"
+        adonisExtensions:CursorSpotlightExtension.RelativeSpotlightSize="0.25"
+        TitleBarBackground="#4A4A5E"
+        Icon="../Image/settings.png">
+    <Grid Background="#4A4A5E">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <GroupBox Grid.Column="1" BorderThickness="2" Padding="2,0,2,2">
+            <GroupBox.Header>
+                <Label Padding="6" Margin="0,2,0,0" FontWeight="Regular">Modbus-устройства</Label>
+            </GroupBox.Header>
+            <ListBox x:Name="DEVICES"
+                     ItemsSource="{Binding Devices}"
+                     SelectedItem="{Binding SelectDevice}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=SpecificName}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </GroupBox>
+        <!---->
+        <GroupBox Grid.Row="1" Background="#4A4A5E">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="Add"
+                        Content="Добавить"
+                        Click="Add_Click"/>
+                <Button x:Name="Edit"
+                        Content="Редактировать"
+                        Click="Edit_Click"
+                        Grid.Column="2"/>
+                <Button x:Name="Remove"
+                        Content="Удалить"
+                        Click="Remove_Click"
+                        Grid.Column="4"/>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</adonisControls:AdonisWindow>
