@@ -24,9 +24,10 @@ namespace Modbus.Model.ModbusRtuFuncs
             {
                 values = master.ReadCoils(1, StartAddress, NumberOfPoint);
             }
-            catch
+            catch (Exception ex)
             {
                 message += $"Ошибка чтения значений: [{device.Id}, {StartAddress} - {StartAddress + NumberOfPoint - 1}]";
+                message += $"\n{ex.Message}";
                 LastLogs = message;
                 return;
             }

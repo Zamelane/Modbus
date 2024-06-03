@@ -47,16 +47,16 @@
         <Menu VerticalAlignment="Top" Grid.ColumnSpan="2">
             <MenuItem Header="Modbus устройства" Icon="1" Click="ListDevicesItem_Click"/>
             <MenuItem Header="COM порты"         Icon="2">
-                <MenuItem Header="Конфигурирование" Click="ConfigureComPortsItem_Click"/>
+                <MenuItem Header="Конфигурирование" Click="ConfigureComPortsItem_Click" Cursor=""/>
                 <MenuItem Header="Обновить список портов" Click="ReloadComPorts_Click"/>
             </MenuItem>
         </Menu>
         <StackPanel Grid.Row="1"
-                    Orientation="Horizontal">
-            <ComboBox     Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding Devices}" DisplayMemberPath="Name" SelectedItem="{Binding SelectDevice}" adonisExtensions:CornerRadiusExtension.CornerRadius="5"/>
-            <ComboBox     Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding Funcs}" DisplayMemberPath="SpecificName" SelectedItem="{Binding SelectFunc}" adonisExtensions:CornerRadiusExtension.CornerRadius="5" Cursor="Hand"/>
-            <TextBox      Style="{StaticResource TextBoxStyle}" adonisExtensions:WatermarkExtension.Watermark="Частота запроса в ms" adonisExtensions:CornerRadiusExtension.CornerRadius="5"/>
-            <ToggleButton Style="{StaticResource ToggleButtonStyle}" Width="80" Content="Запустить..." adonisExtensions:CornerRadiusExtension.CornerRadius="5"/>
+                    Orientation="Horizontal" Cursor="">
+            <ComboBox     Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding Devices}" DisplayMemberPath="Name" SelectedItem="{Binding SelectDevice}" adonisExtensions:CornerRadiusExtension.CornerRadius="5" IsEnabled="{c:Binding !RepeatIsRunning and !SendIsRunning}" Cursor="Hand"/>
+            <ComboBox     Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding Funcs}" DisplayMemberPath="SpecificName" SelectedItem="{Binding SelectFunc}" adonisExtensions:CornerRadiusExtension.CornerRadius="5" Cursor="Hand" IsEnabled="{c:Binding !RepeatIsRunning and !SendIsRunning}"/>
+            <TextBox      Style="{StaticResource TextBoxStyle}"  Text="{Binding RepeatMs}" adonisExtensions:WatermarkExtension.Watermark="Частота запроса в ms" adonisExtensions:CornerRadiusExtension.CornerRadius="5" IsEnabled="{c:Binding !RepeatIsRunning and !SendIsRunning}" Cursor="Hand"/>
+            <ToggleButton Style="{StaticResource ToggleButtonStyle}" Width="80" Content="{c:Binding (RepeatIsRunning?\'Остановить\':\'Запустить\')}" adonisExtensions:CornerRadiusExtension.CornerRadius="5" IsEnabled="{c:Binding !SendIsRunning}" Cursor="Hand" Click="RepeatSendButton_Click"/>
         </StackPanel>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
@@ -64,7 +64,8 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <GroupBox adonisExtensions:CornerRadiusExtension.CornerRadius="5"
-                      Margin="7">
+                      Margin="7"
+                      IsEnabled="{c:Binding !RepeatIsRunning and !SendIsRunning}">
                 <GroupBox.Header>
                     <Label>Запрос</Label>
                 </GroupBox.Header>
@@ -224,7 +225,8 @@
                             Click="OneSendButton_Click"
                             adonisExtensions:CornerRadiusExtension.CornerRadius="5"
                             Content="Отправить 1 раз"
-                            Margin="0,0,7,0"/>
+                            Margin="0,0,7,0"
+                            IsEnabled="{c:Binding !RepeatIsRunning and !SendIsRunning}"/>
                 </Grid>
             </Grid>
         </Grid>

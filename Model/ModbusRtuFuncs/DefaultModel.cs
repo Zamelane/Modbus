@@ -230,14 +230,17 @@ namespace Modbus.Model.ModbusRtuFuncs
         }
         public void UpdateTableValues(List<UInt16Ceil> UInt16Values = null, List<BooleanCeil> BooleanValues = null)
         {
-            TableValues.Clear();
-            if (BooleanValues != null)
-                foreach (var ceil in BooleanValues)
-                    TableValues.Add(new UniversalCeil(ceil.Address, ceil.Value.ToString()));
-            else if (UInt16Values != null)
-                foreach (var ceil in UInt16Values)
-                    TableValues.Add(new UniversalCeil(ceil.Address, ceil.Value.ToString()));
-            OnPropertyChanged("TableValues");
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                TableValues.Clear();
+                if (BooleanValues != null)
+                    foreach (var ceil in BooleanValues)
+                        TableValues.Add(new UniversalCeil(ceil.Address, ceil.Value.ToString()));
+                else if (UInt16Values != null)
+                    foreach (var ceil in UInt16Values)
+                        TableValues.Add(new UniversalCeil(ceil.Address, ceil.Value.ToString()));
+                OnPropertyChanged("TableValues");
+            });
         }
         public virtual void SendMessage(DeviceModel device, ModbusSerialMaster master, ref string message, bool isRTU = true) => message += "Метод не переопределён!";
         public string GenerateResultMessage(string message) => $"[{DateTime.Now.ToString()}] {message}\n";

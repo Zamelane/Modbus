@@ -14,6 +14,9 @@ namespace Modbus.Controllers
         private DefaultModel selectFunc;
         private string[] viewTypes = new string[] { "Текст", "Таблица" };
         private string selectViewType = "Текст";
+        private int repeatMs = 1000;
+        private bool repeatIsRunning = false;
+        private bool sendIsRunning = false;
 
         public RequestController()
         {
@@ -67,6 +70,33 @@ namespace Modbus.Controllers
                 selectViewType = value;
                 OnPropertyChanged("SelectViewType");
                 OnPropertyChanged("IsViewTypeTable");
+            }
+        }
+        public int RepeatMs
+        {
+            get => repeatMs;
+            set
+            {
+                repeatMs = value;
+                OnPropertyChanged("RepeatMs");
+            }
+        }
+        public bool RepeatIsRunning
+        {
+            get => repeatIsRunning;
+            set
+            {
+                repeatIsRunning = value;
+                OnPropertyChanged("RepeatIsRunning");
+            }
+        }
+        public bool SendIsRunning
+        {
+            get => sendIsRunning;
+            set
+            {
+                sendIsRunning = value;
+                OnPropertyChanged("SendIsRunning");
             }
         }
         public bool IsViewTypeTable => selectViewType == "Таблица";
