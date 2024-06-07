@@ -212,8 +212,9 @@ namespace Modbus.Model.ModbusRtuFuncs
             ModbusSerialMaster master;
             try
             {
-                port.ReadTimeout = 1000;
-                port.WriteTimeout = 1000;
+                // Теперь конфигурируется через настройки портов
+                //port.ReadTimeout = 1000;
+                //port.WriteTimeout = 1000;
                 master = isRTU ? ModbusSerialMaster.CreateRtu(port) : ModbusSerialMaster.CreateAscii(port);
             }
             catch

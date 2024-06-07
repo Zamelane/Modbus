@@ -73,6 +73,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Components\ItemCheckBoxParam.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\ItemMassValuesParam.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\ItemTextParam.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\ConfigureModbusDeviceWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -92,6 +104,15 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Components\ItemCheckBoxParam.xaml.cs">
+      <DependentUpon>ItemCheckBoxParam.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\ItemMassValuesParam.xaml.cs">
+      <DependentUpon>ItemMassValuesParam.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\ItemTextParam.xaml.cs">
+      <DependentUpon>ItemTextParam.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controller.cs" />
     <Compile Include="Controllers\DeviceController.cs" />

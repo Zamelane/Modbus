@@ -78,6 +78,24 @@ namespace Modbus.Model
                 OnPropertyChanged("StopBits");
             }
         }
+        public int ReadTimeoutMs
+        {
+            get => _sr.ReadTimeout;
+            set
+            {
+                _sr.ReadTimeout = value;
+                OnPropertyChanged("ReadTimeMs");
+            }
+        }
+        public int WriteTimeoutMs
+        {
+            get => _sr.WriteTimeout;
+            set
+            {
+                _sr.WriteTimeout = value;
+                OnPropertyChanged("WriteTimeout");
+            }
+        }
 
         public SerialPortModel(string portName)
         {

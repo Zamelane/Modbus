@@ -9,8 +9,8 @@
         xmlns:adonisControls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
         xmlns:adonisExtensions="clr-namespace:AdonisUI.Extensions;assembly=AdonisUI"
         Title="Настрока COM-портов"
-        MinHeight="250" MinWidth="250"
-        MaxHeight="250" MaxWidth="250" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow"
+        MinHeight="330" MinWidth="300"
+        MaxHeight="330" MaxWidth="300" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow"
         adonisExtensions:CursorSpotlightExtension.RelativeSpotlightSize="0.25"
         TitleBarBackground="#4A4A5E"
         Icon="../Image/settings.png">
@@ -19,6 +19,9 @@
             <Setter Property="Width" Value="75"/>
         </Style>
         <Style x:Key="CheckBoxStyle" TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+            <Setter Property="Width" Value="75"/>
+        </Style>
+        <Style x:Key="TextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
             <Setter Property="Width" Value="75"/>
         </Style>
         <Style x:Key="ParamElem" TargetType="StackPanel">
@@ -49,6 +52,11 @@
                           SelectedValue="{Binding SelectPort.BaudRate}"
                           ItemsSource="{Binding BAUDRATES}"
                           />
+                    <StackPanel.ToolTip>
+                        <ToolTip>
+                            Возвращает или задает скорость передачи для последовательного порта (в бодах).
+                        </ToolTip>
+                    </StackPanel.ToolTip>
                 </StackPanel>
                 <StackPanel Style="{StaticResource ParamElem}">
                     <Label Style="{StaticResource LabelStyle}">Битность</Label>
@@ -56,6 +64,11 @@
                           SelectedValue="{Binding SelectPort.DataBits}"
                           ItemsSource="{Binding DATABITS}"
                           />
+                    <StackPanel.ToolTip>
+                        <ToolTip>
+                            Возвращает или задает стандартное число битов данных в байте.
+                        </ToolTip>
+                    </StackPanel.ToolTip>
                 </StackPanel>
                 <StackPanel Style="{StaticResource ParamElem}">
                     <Label Style="{StaticResource LabelStyle}">Чётность</Label>
@@ -63,6 +76,11 @@
                         SelectedValue="{Binding SelectPort.Parity}"
                         ItemsSource="{Binding PARITYS}"
                         />
+                    <StackPanel.ToolTip>
+                        <ToolTip>
+                            Одно из значений перечисления, представляющее протокол контроля четности. Значение по умолчанию — 'None'.
+                        </ToolTip>
+                    </StackPanel.ToolTip>
                 </StackPanel>
                 <StackPanel Style="{StaticResource ParamElem}">
                     <Label Style="{StaticResource LabelStyle}">Стоп бит</Label>
@@ -70,6 +88,29 @@
                           SelectedValue="{Binding SelectPort.StopBits}"
                           ItemsSource="{Binding STOP_BITS}"
                           />
+                    <StackPanel.ToolTip>
+                        <ToolTip>
+                            Получает или задает стандартное число стоповых битов в байте.
+                        </ToolTip>
+                    </StackPanel.ToolTip>
+                </StackPanel>
+                <StackPanel Style="{StaticResource ParamElem}">
+                    <Label Style="{StaticResource LabelStyle}">Время чтения</Label>
+                    <TextBox Style="{StaticResource TextBoxStyle}" Text="{Binding SelectPort.ReadTimeoutMs}"/>
+                    <StackPanel.ToolTip>
+                        <ToolTip>
+                            Таймаут чтения в миллисекундах. Должно быть больше '0' или '-1' при неограниченном времени.
+                        </ToolTip>
+                    </StackPanel.ToolTip>
+                </StackPanel>
+                <StackPanel Style="{StaticResource ParamElem}">
+                    <Label Style="{StaticResource LabelStyle}">Время записи</Label>
+                    <TextBox Style="{StaticResource TextBoxStyle}" Text="{Binding SelectPort.WriteTimeoutMs}"/>
+                    <StackPanel.ToolTip>
+                        <ToolTip>
+                            Таймаут записи в миллисекундах. Должно быть больше '0' или '-1' при неограниченном времени.
+                        </ToolTip>
+                    </StackPanel.ToolTip>
                 </StackPanel>
             </StackPanel>
         </GroupBox>

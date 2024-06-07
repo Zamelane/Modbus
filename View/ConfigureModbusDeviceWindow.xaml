@@ -42,6 +42,11 @@
                                   ItemsSource="{Binding _controller.Ports}"
                                   SelectedItem="{Binding Device.SerialPortModel}"
                                   DisplayMemberPath="Name"/>
+                        <Grid.ToolTip>
+                            <ToolTip>
+                                Порт, через который будет происходить общение с modbus устройством.
+                            </ToolTip>
+                        </Grid.ToolTip>
                     </Grid>
                     <Grid Margin="0,7,0,0" DataContext="{Binding Device}">
                         <Grid.ColumnDefinitions>
@@ -52,6 +57,11 @@
                         <Label Content="Slave ID"
                                VerticalAlignment="Center"/>
                         <TextBox Grid.Column="2" Text="{Binding Id}"/>
+                        <Grid.ToolTip>
+                            <ToolTip>
+                                Идентификатор Slave-устройства.
+                            </ToolTip>
+                        </Grid.ToolTip>
                     </Grid>
                     <Grid Margin="0,7,0,0" DataContext="{Binding Device}">
                         <Grid.ColumnDefinitions>
@@ -62,6 +72,11 @@
                         <Label Content="Наименование"
                                VerticalAlignment="Center"/>
                         <TextBox Grid.Column="2" Text="{Binding Name}"/>
+                        <Grid.ToolTip>
+                            <ToolTip>
+                                Псевдоним Slave-устройства в этом приложении.
+                            </ToolTip>
+                        </Grid.ToolTip>
                     </Grid>
                 </StackPanel>
             </ScrollViewer>

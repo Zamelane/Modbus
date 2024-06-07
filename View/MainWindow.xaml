@@ -7,6 +7,7 @@
         xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
         xmlns:adonisControls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
         xmlns:adonisExtensions="clr-namespace:AdonisUI.Extensions;assembly=AdonisUI"
+        xmlns:Components="clr-namespace:Modbus.Components"
         mc:Ignorable="d"
         xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
         Icon="../Image/rs-485.png"
@@ -72,112 +73,13 @@
                 <GroupBox.Content>
                     <ScrollViewer>
                         <StackPanel>
-                        <Grid Style="{StaticResource GridParamsStyle}" Visibility="{c:Binding SelectFunc.IsStartAddress}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="7"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="Начальный адрес" TextWrapping="Wrap" VerticalAlignment="Center"/>
-                            <TextBox Grid.Column="2" Text="{Binding SelectFunc.StartAddress}"/>
-                        </Grid>
-                        <Grid Style="{StaticResource GridParamsStyle}" Visibility="{c:Binding SelectFunc.IsNumberOfPoint}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="7"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="Кол-во регистров" TextWrapping="Wrap" VerticalAlignment="Center"/>
-                            <TextBox Grid.Column="2" Text="{Binding SelectFunc.NumberOfPoint}"/>
-                        </Grid>
-                        <Grid Style="{StaticResource GridParamsStyle}" Visibility="{c:Binding SelectFunc.IsCoilAddress}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="7"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="Адрес регистра" TextWrapping="Wrap" VerticalAlignment="Center"/>
-                            <TextBox Grid.Column="2" Text="{Binding SelectFunc.CoilAddress}"/>
-                        </Grid>
-                        <Grid Style="{StaticResource GridParamsStyle}" Visibility="{c:Binding SelectFunc.IsBooleanValue}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="7"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="Значение для записи" TextWrapping="Wrap" VerticalAlignment="Center"/>
-                            <CheckBox Grid.Column="2" HorizontalAlignment="Center" IsChecked="{Binding SelectFunc.BooleanValue}"/>
-                        </Grid>
-                        <Grid Style="{StaticResource GridParamsStyle}" Visibility="{c:Binding SelectFunc.IsUInt16Value}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="7"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="UInt16 для записи" TextWrapping="Wrap" VerticalAlignment="Center"/>
-                            <TextBox Grid.Column="2" Text="{Binding SelectFunc.UInt16Value}"/>
-                        </Grid>
-                        <Grid Style="{StaticResource GridParamsStyle}" Visibility="{c:Binding SelectFunc.IsMultipleUInt16Value}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition Height="7"/>
-                                <RowDefinition/>
-                                <RowDefinition Height="7"/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="Значения для записи:" TextWrapping="Wrap" VerticalAlignment="Center"/>
-                            <GroupBox Grid.Row="2" Padding="0" BorderThickness="1">
-                                <DataGrid
-                                    AutoGenerateColumns="False"
-                                    ItemsSource="{Binding SelectFunc.MultipleUInt16Value}"
-                                    x:Name="MultipleUInt16Values"
-                                    CellEditEnding="MultipleValues_CellEditEnding">
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Адрес" Binding="{Binding Path=Address}" IsReadOnly="True"/>
-                                        <DataGridTextColumn Header="UInt16" Binding="{Binding Path=Value}"/>
-                                    </DataGrid.Columns>
-                                </DataGrid>
-                            </GroupBox>
-                            <StackPanel Orientation="Horizontal"
-                                        HorizontalAlignment="Right"
-                                        Grid.Row="4">
-                                <Button Content="+" Margin="0,0,5,0" Width="25" Cursor="Hand" Click="AddMassValue_Click"/>
-                                <Button Content="-" Width="25" Cursor="Hand" Click="RemoveMassValue_Click"/>
-                            </StackPanel>
-                        </Grid>
-                        <Grid Style="{StaticResource GridParamsStyle}" Visibility="{c:Binding SelectFunc.IsMultipleBooleanValue}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition Height="7"/>
-                                <RowDefinition/>
-                                <RowDefinition Height="7"/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="Значения для записи:" TextWrapping="Wrap" VerticalAlignment="Center"/>
-                            <GroupBox Grid.Row="2" Padding="0" BorderThickness="1">
-                                <DataGrid AutoGenerateColumns="False"
-                                          ItemsSource="{Binding SelectFunc.MultipleBooleanValue}"
-                                          x:Name="MultipleBooleanValues">
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Адрес" Binding="{Binding Path=Address}" IsReadOnly="True"/>
-                                        <DataGridTemplateColumn Header="Boolean">
-                                            <DataGridTemplateColumn.CellTemplate>
-                                                <DataTemplate>
-                                                        <CheckBox Tag="{Binding Path=Address}" IsChecked="{Binding Path=Value}" HorizontalAlignment="Center" Click="MultipleBooleanValue_Click"/>
-                                                </DataTemplate>
-                                            </DataGridTemplateColumn.CellTemplate>
-                                        </DataGridTemplateColumn>
-                                    </DataGrid.Columns>
-                                </DataGrid>
-                            </GroupBox>
-                            <StackPanel Orientation="Horizontal"
-                                HorizontalAlignment="Right"
-                                Grid.Row="4">
-                                <Button Content="+" Margin="0,0,5,0" Width="25" Cursor="Hand" Click="AddMassValue_Click"/>
-                                <Button Content="-" Width="25" Cursor="Hand" Click="RemoveMassValue_Click"/>
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
+                            <Components:ItemTextParam       Title="Начальный адрес"      Value="{Binding SelectFunc.StartAddress,  Mode=TwoWay}"  Visibility="{c:Binding SelectFunc.IsStartAddress }"/>
+                            <Components:ItemTextParam       Title="Кол-во регистров"     Value="{Binding SelectFunc.NumberOfPoint, Mode=TwoWay}"  Visibility="{c:Binding SelectFunc.IsNumberOfPoint}"/>
+                            <Components:ItemTextParam       Title="Адрес регистра"       Value="{Binding SelectFunc.CoilAddress,   Mode=TwoWay}"  Visibility="{c:Binding SelectFunc.IsCoilAddress  }"/>
+                            <Components:ItemCheckBoxParam   Title="Значение для записи"  Value="{Binding SelectFunc.BooleanValue,  Mode=TwoWay}"  Visibility="{c:Binding SelectFunc.IsBooleanValue }"/>
+                            <Components:ItemTextParam       Title="UInt16 для записи"    Value="{Binding SelectFunc.UInt16Value,   Mode=TwoWay}"  Visibility="{c:Binding SelectFunc.IsUInt16Value  }"/>
+                            <Components:ItemMassValuesParam Title="Значения для записи:" Func ="{Binding SelectFunc,               Mode=TwoWay}"  Visibility="{c:Binding (SelectFunc.IsMultipleUInt16Value or SelectFunc.IsMultipleBooleanValue) }"/>
+                        </StackPanel>
                     </ScrollViewer>
                 </GroupBox.Content>
             </GroupBox>
