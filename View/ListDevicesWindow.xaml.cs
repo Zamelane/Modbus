@@ -29,14 +29,14 @@ namespace Modbus.View
             DataContext = _controller;
         }
 
-        private void Add_Click(object sender, RoutedEventArgs e) => new ConfigureModbusDeviceWindow(_controller).ShowDialog();
+        private void Add_Click(object sender, RoutedEventArgs e) => new ConfigureModbusDeviceWindow(_controller) { Owner = this }.ShowDialog();
 
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
             if (_controller.SelectDevice == null)
                 return;
 
-            new ConfigureModbusDeviceWindow(_controller, _controller.SelectDevice).ShowDialog();
+            new ConfigureModbusDeviceWindow(_controller, _controller.SelectDevice) { Owner = this }.ShowDialog();
             _controller.SelectDevice.OnPropertyChanged("SpecificName"); // Обновляем имя для редактируемого устройства
         }
 

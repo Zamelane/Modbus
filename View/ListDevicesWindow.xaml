@@ -10,7 +10,8 @@
         xmlns:adonisExtensions="clr-namespace:AdonisUI.Extensions;assembly=AdonisUI"
         Title="Список устройств"
         MinHeight="250" MinWidth="300"
-        MaxHeight="250" MaxWidth="300" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow"
+        MaxHeight="250" MaxWidth="300"
+        WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow"
         adonisExtensions:CursorSpotlightExtension.RelativeSpotlightSize="0.25"
         TitleBarBackground="#4A4A5E"
         Icon="../Image/settings.png">

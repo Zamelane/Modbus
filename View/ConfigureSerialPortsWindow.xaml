@@ -47,7 +47,7 @@
         <GroupBox Header="Настройка порта" BorderThickness="2">
             <StackPanel HorizontalAlignment="Left">
                 <StackPanel Style="{StaticResource ParamElem}">
-                    <Label Style="{StaticResource LabelStyle}">Битрейт</Label>
+                    <Label Style="{StaticResource LabelStyle}">Бодрейт</Label>
                     <ComboBox Style="{StaticResource ComboBoxStyle}" IsEditable="True" x:Name="BAUDRATE"
                           SelectedValue="{Binding SelectPort.BaudRate}"
                           ItemsSource="{Binding BAUDRATES}"

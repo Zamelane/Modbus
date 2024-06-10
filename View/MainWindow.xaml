@@ -11,7 +11,10 @@
         mc:Ignorable="d"
         xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
         Icon="../Image/rs-485.png"
-        Title="SerialPort RS-485" Height="450" Width="800"
+        Title="SerialPort RS-485"
+        Height="450" Width="800"
+        MaxHeight="700" MaxWidth="1100"
+        MinHeight="350" MinWidth="700"
         adonisExtensions:CursorSpotlightExtension.RelativeSpotlightSize="0.25">
     <Window.Resources>
         <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
@@ -54,11 +57,27 @@
         </Menu>
         <StackPanel Grid.Row="1"
                     Orientation="Horizontal" Cursor="">
-            <ComboBox     Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding Devices}" DisplayMemberPath="Name" SelectedItem="{Binding SelectDevice}" adonisExtensions:CornerRadiusExtension.CornerRadius="5" IsEnabled="{c:Binding !RepeatIsRunning and !SendIsRunning}" Cursor="Hand"/>
-            <ComboBox     Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding Funcs}" DisplayMemberPath="SpecificName" SelectedItem="{Binding SelectFunc}" adonisExtensions:CornerRadiusExtension.CornerRadius="5" Cursor="Hand" IsEnabled="{c:Binding !RepeatIsRunning and !SendIsRunning}"/>
+            <ComboBox     Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding Devices}" DisplayMemberPath="Name" SelectedItem="{Binding SelectDevice}" adonisExtensions:CornerRadiusExtension.CornerRadius="5" IsEnabled="{c:Binding !RepeatIsRunning and !SendIsRunning}" Cursor="Hand">
+                <ComboBox.ToolTip>
+                    Устройство-получатель запроса
+                </ComboBox.ToolTip>
+            </ComboBox>
+            <ComboBox     Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding Funcs}" DisplayMemberPath="SpecificName" SelectedItem="{Binding SelectFunc}" adonisExtensions:CornerRadiusExtension.CornerRadius="5" Cursor="Hand" IsEnabled="{c:Binding !RepeatIsRunning and !SendIsRunning}">
+                <ComboBox.ToolTip>
+                    Функция возможности протокола modbus, которая будет послана slave устройству
+                </ComboBox.ToolTip>
+            </ComboBox>
             <ComboBox     Style="{StaticResource ComboBoxStyle}" Width="75" ItemsSource="{Binding ProtocolTypes}" SelectedValue="{Binding SelectedProtocol}" adonisExtensions:CornerRadiusExtension.CornerRadius="5" Cursor="Hand" IsEnabled="{c:Binding !RepeatIsRunning and !SendIsRunning}"/>
-            <TextBox      Style="{StaticResource TextBoxStyle}"  Text="{Binding RepeatMs}" adonisExtensions:WatermarkExtension.Watermark="Частота запроса в ms" adonisExtensions:CornerRadiusExtension.CornerRadius="5" IsEnabled="{c:Binding !RepeatIsRunning and !SendIsRunning}" Cursor="Hand"/>
-            <ToggleButton Style="{StaticResource ToggleButtonStyle}" Width="80" Content="{c:Binding (RepeatIsRunning?\'Остановить\':\'Запустить\')}" adonisExtensions:CornerRadiusExtension.CornerRadius="5" IsEnabled="{c:Binding !SendIsRunning}" Cursor="Hand" Click="RepeatSendButton_Click"/>
+            <TextBox      Style="{StaticResource TextBoxStyle}"  Text="{Binding RepeatMs}" adonisExtensions:WatermarkExtension.Watermark="Частота запроса в ms" adonisExtensions:CornerRadiusExtension.CornerRadius="5" IsEnabled="{c:Binding !RepeatIsRunning and !SendIsRunning}" Cursor="Hand">
+                <TextBox.ToolTip>
+                    Интервал между запросами
+                </TextBox.ToolTip>
+            </TextBox>
+            <ToggleButton Style="{StaticResource ToggleButtonStyle}" Width="80" Content="{c:Binding (RepeatIsRunning?\'Остановить\':\'Запустить\')}" adonisExtensions:CornerRadiusExtension.CornerRadius="5" IsEnabled="{c:Binding !SendIsRunning}" Cursor="Hand" Click="RepeatSendButton_Click">
+                <ToggleButton.ToolTip>
+                    Запуск/остановка повторяемой отправки запросов
+                </ToggleButton.ToolTip>
+            </ToggleButton>
         </StackPanel>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
@@ -74,12 +93,12 @@
                 <GroupBox.Content>
                     <ScrollViewer>
                         <StackPanel>
-                            <Components:ItemTextParam       Title="Начальный адрес"      Value="{Binding SelectFunc.StartAddress,  Mode=TwoWay}"  Visibility="{c:Binding SelectFunc.IsStartAddress }"/>
-                            <Components:ItemTextParam       Title="Кол-во регистров"     Value="{Binding SelectFunc.NumberOfPoint, Mode=TwoWay}"  Visibility="{c:Binding SelectFunc.IsNumberOfPoint}"/>
-                            <Components:ItemTextParam       Title="Адрес регистра"       Value="{Binding SelectFunc.CoilAddress,   Mode=TwoWay}"  Visibility="{c:Binding SelectFunc.IsCoilAddress  }"/>
-                            <Components:ItemCheckBoxParam   Title="Значение для записи"  Value="{Binding SelectFunc.BooleanValue,  Mode=TwoWay}"  Visibility="{c:Binding SelectFunc.IsBooleanValue }"/>
-                            <Components:ItemTextParam       Title="UInt16 для записи"    Value="{Binding SelectFunc.UInt16Value,   Mode=TwoWay}"  Visibility="{c:Binding SelectFunc.IsUInt16Value  }"/>
-                            <Components:ItemMassValuesParam Title="Значения для записи:" Func ="{Binding SelectFunc,               Mode=TwoWay}"  Visibility="{c:Binding (SelectFunc.IsMultipleUInt16Value or SelectFunc.IsMultipleBooleanValue) }"/>
+                            <Components:ItemTextParam       Title="Начальный адрес"      Value="{Binding SelectFunc.StartAddress,  Mode=TwoWay}"  Visibility="{c:Binding SelectFunc.IsStartAddress }" ToolTip="Начальный адрес регистра/флага (включительно)"/>
+                            <Components:ItemTextParam       Title="Кол-во регистров"     Value="{Binding SelectFunc.NumberOfPoint, Mode=TwoWay}"  Visibility="{c:Binding SelectFunc.IsNumberOfPoint}" ToolTip="Количество адресов регистров/флагов для чтения (начиная с 'Начальный адрсес' включительно)"/>
+                            <Components:ItemTextParam       Title="Адрес регистра"       Value="{Binding SelectFunc.CoilAddress,   Mode=TwoWay}"  Visibility="{c:Binding SelectFunc.IsCoilAddress  }" ToolTip="Адрес регистра для чтения/записи"/>
+                            <Components:ItemCheckBoxParam   Title="Значение для записи"  Value="{Binding SelectFunc.BooleanValue,  Mode=TwoWay}"  Visibility="{c:Binding SelectFunc.IsBooleanValue }" ToolTip="Значение флага для записи"/>
+                            <Components:ItemTextParam       Title="UInt16 для записи"    Value="{Binding SelectFunc.UInt16Value,   Mode=TwoWay}"  Visibility="{c:Binding SelectFunc.IsUInt16Value  }" ToolTip="Значение регистра для записи"/>
+                            <Components:ItemMassValuesParam Title="Значения для записи:" Func ="{Binding SelectFunc,               Mode=TwoWay}"  Visibility="{c:Binding (SelectFunc.IsMultipleUInt16Value or SelectFunc.IsMultipleBooleanValue) }" ToolTip="Значения по адресам для записи в несколько регистров/флагов"/>
                         </StackPanel>
                     </ScrollViewer>
                 </GroupBox.Content>

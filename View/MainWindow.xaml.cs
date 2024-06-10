@@ -34,9 +34,9 @@ namespace Modbus
             DataContext = _controller;
         }
 
-        private void ConfigureComPortsItem_Click(object sender, RoutedEventArgs e) => new ConfigureSerialPortsWindow(_controller).ShowDialog();
+        private void ConfigureComPortsItem_Click(object sender, RoutedEventArgs e) => new ConfigureSerialPortsWindow(_controller) { Owner = this }.ShowDialog();
 
-        private void ListDevicesItem_Click(object sender, RoutedEventArgs e) => new ListDevicesWindow(_controller).ShowDialog();
+        private void ListDevicesItem_Click(object sender, RoutedEventArgs e) => new ListDevicesWindow(_controller) { Owner = this }.ShowDialog();
 
         private void OneSendButton_Click(object sender, RoutedEventArgs e)
         {
@@ -70,6 +70,12 @@ namespace Modbus
         // Нажатие кнопки переодической отправки данных
         private void RepeatSendButton_Click(object sender, RoutedEventArgs e)
         {
+            if (_controller.SelectDevice == null)
+            {
+                AdonisUI.Controls.MessageBox.Show("Не выбрано устройство для отправки запроса!", "Проверьте данные", AdonisUI.Controls.MessageBoxButton.OK, AdonisUI.Controls.MessageBoxImage.Information);
+                return;
+            }
+
             try
             {
                 // Если периодическа отправка не запущена, то запускаем

@@ -56,7 +56,7 @@
                         </Grid.ColumnDefinitions>
                         <Label Content="Slave ID"
                                VerticalAlignment="Center"/>
-                        <TextBox Grid.Column="2" Text="{Binding Id}"/>
+                        <TextBox Grid.Column="2" Text="{Binding Id}" MaxLength="5"/>
                         <Grid.ToolTip>
                             <ToolTip>
                                 Идентификатор Slave-устройства.
@@ -71,7 +71,7 @@
                         </Grid.ColumnDefinitions>
                         <Label Content="Наименование"
                                VerticalAlignment="Center"/>
-                        <TextBox Grid.Column="2" Text="{Binding Name}"/>
+                        <TextBox Grid.Column="2" Text="{Binding Name}" MaxLength="25"/>
                         <Grid.ToolTip>
                             <ToolTip>
                                 Псевдоним Slave-устройства в этом приложении.
