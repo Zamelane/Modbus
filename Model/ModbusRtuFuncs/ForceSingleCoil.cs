@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO.Ports;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Modbus.Device;
-using Modbus.Model.Helpers;
 using Modbus.Model.Involucres;
 
 namespace Modbus.Model.ModbusRtuFuncs
