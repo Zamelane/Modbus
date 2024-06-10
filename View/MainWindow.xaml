@@ -115,7 +115,7 @@
                     <ComboBox Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding ViewTypes}" SelectedItem="{Binding SelectViewType}" adonisExtensions:CornerRadiusExtension.CornerRadius="5" Cursor="Hand"/>
                 </StackPanel>
                 <Grid Grid.Row="1" Margin="0,0,0,4">
-                    <TextBox IsReadOnly="True" VerticalContentAlignment="Top" Text="{Binding SelectFunc.LastLogs}" Visibility="{c:Binding !IsViewTypeTable}"/>
+                    <TextBox IsReadOnly="True" VerticalContentAlignment="Top" Text="{Binding SelectFunc.LastLogs}" TextWrapping="WrapWithOverflow" Visibility="{c:Binding !IsViewTypeTable}"/>
                     <GroupBox Padding="0" BorderThickness="1" BorderBrush="#262630" Visibility="{c:Binding IsViewTypeTable}">
                         <DataGrid
                             AutoGenerateColumns="False"
