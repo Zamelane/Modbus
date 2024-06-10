@@ -17,6 +17,12 @@ namespace Modbus.Controllers
         private int repeatMs = 1000;
         private bool repeatIsRunning = false;
         private bool sendIsRunning = false;
+        private bool isRTU = true;
+        public  List<string> ProtocolTypes { get; set; } = new List<string>() { "RTU", "ASCII" };
+        public string SelectedProtocol { 
+            get => ProtocolTypes.ElementAt(isRTU ? 0 : 1);
+            set => isRTU = value == "RTU";
+        }
 
         public RequestController()
         {
@@ -97,6 +103,15 @@ namespace Modbus.Controllers
             {
                 sendIsRunning = value;
                 OnPropertyChanged("SendIsRunning");
+            }
+        }
+        public bool IsRTU
+        {
+            get => isRTU;
+            set
+            {
+                isRTU = value;
+                OnPropertyChanged("IsRTU");
             }
         }
         public bool IsViewTypeTable => selectViewType == "Таблица";

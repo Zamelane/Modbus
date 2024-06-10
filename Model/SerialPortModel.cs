@@ -100,6 +100,8 @@ namespace Modbus.Model
         public SerialPortModel(string portName)
         {
             _sr = new SerialPort(portName);
+            _sr.ReadTimeout  = 1000;
+            _sr.WriteTimeout = 1000;
         }
 
         public SerialPort GetSerialPort() => _sr;

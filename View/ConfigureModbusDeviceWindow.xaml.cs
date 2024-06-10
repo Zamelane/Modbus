@@ -51,7 +51,7 @@ namespace Modbus.View
             // Проверяем уникальность Salve ID
             if (_controller.CheckDeviceAvailability(Device))
             {
-                AdonisUI.Controls.MessageBox.Show($"Устройство с Salve ID ({Device.Id}) уже существует.", 
+                AdonisUI.Controls.MessageBox.Show($"Устройство с Salve ID ({Device.Id}) на порту ({Device.SerialPortModel.Name}) уже существует.", 
                     "Предупреждение", 
                     AdonisUI.Controls.MessageBoxButton.OK,
                     AdonisUI.Controls.MessageBoxImage.Warning);

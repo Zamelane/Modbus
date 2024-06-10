@@ -35,41 +35,6 @@ namespace Modbus
             }
         }
 
-        public void LoadPorts()
-        {
-            var portsNames = SerialPort.GetPortNames();
-
-            foreach (var portName in portsNames)
-                if (!CheckPortAvailability(portName))
-                    ports.Add(new SerialPortModel(portName));
-
-            DeleteMissingPort(portsNames);
-        }
-
-        private bool CheckPortAvailability(string portName)
-        {
-            foreach (var serialPortModel in ports)
-                if (serialPortModel.Name == portName)
-                    return true;
-            return false;
-        }
-
-        private void DeleteMissingPort(string[] portsNames)
-        {
-            foreach (var serialPortModel in ports)
-            {
-                var isFound = false;
-                foreach (var portName in portsNames)
-                    if (serialPortModel.Name == portName)
-                    {
-                        isFound = true;
-                        break;
-                    }
-                if (!isFound)
-                    ports.Remove(serialPortModel);
-            }
-        }
-
         // Списки значений
         public int[] BAUDRATES
         {

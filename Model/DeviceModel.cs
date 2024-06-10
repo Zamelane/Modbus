@@ -10,9 +10,9 @@ namespace Modbus.Model
 {
     public class DeviceModel : ChangeRealization
     {
-        private byte id;                                      // Salve id
-        private string name;                                // Псевдоним
-        private SerialPortModel serialPortModel = null;    // Модель для взаимодействия с портом
+        private byte            id;                       // Salve id
+        private string          name;                    // Псевдоним
+        private SerialPortModel serialPortModel = null; // Модель для взаимодействия с портом
 
         public byte Id
         {

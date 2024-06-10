@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -39,22 +40,25 @@ namespace Modbus
 
         private void OneSendButton_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (_controller.SelectDevice == null)
+                AdonisUI.Controls.MessageBox.Show("Не выбрано устройство для отправки запроса!", "Проверьте данные", AdonisUI.Controls.MessageBoxButton.OK, AdonisUI.Controls.MessageBoxImage.Information);
+            else
             {
                 _controller.SendIsRunning = true;
-                if (_controller.SelectDevice == null)
-                    AdonisUI.Controls.MessageBox.Show("Не выбрано устройство для отправки запроса!", "Проверьте данные", AdonisUI.Controls.MessageBoxButton.OK, AdonisUI.Controls.MessageBoxImage.Information);
-                else
-                    Task.Factory.StartNew(() =>
+                Task.Factory.StartNew(() =>
+                {
+                    try
                     {
                         _controller.SelectFunc.Send(_controller.SelectDevice);
                         _controller.SendIsRunning = false;
-                    }, new CancellationToken(), TaskCreationOptions.LongRunning, TaskScheduler.Default);
+                    }
+                    finally
+                    {
+                        _controller.SendIsRunning = false;
+                    }
+                }, new CancellationToken(), TaskCreationOptions.LongRunning, TaskScheduler.Default);
             }
-            catch
-            {
-                _controller.SendIsRunning = false;
-            }
+
         }
 
         private void ReloadComPorts_Click(object sender, RoutedEventArgs e)
@@ -88,7 +92,8 @@ namespace Modbus
                                 break;
                             }
                             // Иначе отправляем сообщение
-                            _controller.SelectFunc.Send(_controller.SelectDevice);
+                            _controller.SelectFunc.Send(_controller.SelectDevice, _controller.IsRTU);
+                            _controller.OnPropertyChanged("TableValues");
                             Thread.Sleep(_controller.RepeatMs);
                         }
                     }, _taskController.Token, TaskCreationOptions.LongRunning);
@@ -96,7 +101,8 @@ namespace Modbus
                 }
                 // Если периодическая отправка запущена, то отправляем статус на закрытие
                 else _taskController.Cancel();
-            } catch (Exception ex) // Если ошибка, то выводим сообщение для отладки и высвобождаем ресурсы задачи
+            }
+            catch (Exception ex) // Если ошибка, то выводим сообщение для отладки и высвобождаем ресурсы задачи
             {
                 AdonisUI.Controls.MessageBox.Show(ex.Message, "Ошибка запроса");
                 _taskController.Cancel();

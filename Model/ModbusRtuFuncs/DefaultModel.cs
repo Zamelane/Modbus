@@ -22,32 +22,59 @@ namespace Modbus.Model.ModbusRtuFuncs
         }
 
         // Описание функции
-        public string Name { get; }
-        public Byte   Code { get; }
+        public string Name
+        {
+            get;
+        }
+        public Byte Code
+        {
+            get;
+        }
 
         // Значения обязательности полей для ввода (опциональные)
-        public bool IsStartAddress         { get; set; }   // Начальный адрес чтения
-        public bool IsNumberOfPoint        { get; set; }   // Количество адресов для чтения
-        public bool IsCoilAddress          { get; set; }   // Адрес для записи
-        public bool IsBooleanValue         { get; set; }   // Значение для записи (логического типа)
-        public bool IsUInt16Value          { get; set; }   // Значение для записи (UInt16)
-        public bool IsMultipleUInt16Value  { get; set; }   // Значения для записи (UInt16[])
-        public bool IsMultipleBooleanValue { get; set; }   // Значения для записи (Boolean[])
+        public bool IsStartAddress
+        {
+            get; set;
+        }   // Начальный адрес чтения
+        public bool IsNumberOfPoint
+        {
+            get; set;
+        }   // Количество адресов для чтения
+        public bool IsCoilAddress
+        {
+            get; set;
+        }   // Адрес для записи
+        public bool IsBooleanValue
+        {
+            get; set;
+        }   // Значение для записи (логического типа)
+        public bool IsUInt16Value
+        {
+            get; set;
+        }   // Значение для записи (UInt16)
+        public bool IsMultipleUInt16Value
+        {
+            get; set;
+        }   // Значения для записи (UInt16[])
+        public bool IsMultipleBooleanValue
+        {
+            get; set;
+        }   // Значения для записи (Boolean[])
 
 
         // Значения полей для ввода
-        private UInt16   startAddress          = 0;
-        private UInt16   numberOfPoints        = 0;
-        private byte     coilAddress           = 0;
-        private bool     booleanValue          = false;
-        private UInt16   uInt16Value           = 0;
-        private ObservableCollection<UInt16> multipleUInt16Value   = new ObservableCollection<UInt16>() { 0 };
-        private ObservableCollection<bool> multipleBooleanValue  = new ObservableCollection<bool>() { true };
+        private UInt16 startAddress = 0;
+        private UInt16 numberOfPoints = 0;
+        private byte coilAddress = 0;
+        private bool booleanValue = false;
+        private UInt16 uInt16Value = 0;
+        private ObservableCollection<UInt16> multipleUInt16Value = new ObservableCollection<UInt16>() { 0 };
+        private ObservableCollection<bool> multipleBooleanValue = new ObservableCollection<bool>() { true };
 
         // Результаты работы
         private List<string> logs = new List<string>();
         public int logsIndex = -1;
-        public ObservableCollection<UInt16Ceil> UInt16Result   { get; set; } = new ObservableCollection<UInt16Ceil>();
+        public ObservableCollection<UInt16Ceil> UInt16Result { get; set; } = new ObservableCollection<UInt16Ceil>();
         public ObservableCollection<BooleanCeil> BooleanResult { get; set; } = new ObservableCollection<BooleanCeil>();
         public ObservableCollection<UniversalCeil> TableValues { get; set; } = new ObservableCollection<UniversalCeil>();
 
@@ -120,15 +147,15 @@ namespace Modbus.Model.ModbusRtuFuncs
                     uInt16Ceils.Add(new UInt16Ceil(address++, ceil));
                 return uInt16Ceils;
             }
-/*            set
-            {
-                var uInt16Ceils = value;
-                var collection = new ObservableCollection<UInt16>();
-                foreach (var ceil in uInt16Ceils)
-                    collection.Add(ceil.Value);
-                multipleUInt16Value = collection;
-                OnPropertyChanged("MultipleUInt16Value");
-            }*/
+            /*            set
+                        {
+                            var uInt16Ceils = value;
+                            var collection = new ObservableCollection<UInt16>();
+                            foreach (var ceil in uInt16Ceils)
+                                collection.Add(ceil.Value);
+                            multipleUInt16Value = collection;
+                            OnPropertyChanged("MultipleUInt16Value");
+                        }*/
         }
         public ObservableCollection<BooleanCeil> MultipleBooleanValue
         {
@@ -140,15 +167,15 @@ namespace Modbus.Model.ModbusRtuFuncs
                     booleanCeils.Add(new BooleanCeil(address++, ceil));
                 return booleanCeils;
             }
-/*            set
-            {
-                var booleanCeils = value;
-                var collection = new ObservableCollection<bool>();
-                foreach (var ceil in booleanCeils)
-                    collection.Add(ceil.Value);
-                multipleBooleanValue = collection;
-                OnPropertyChanged("MultipleBooleanValue");
-            }*/
+            /*            set
+                        {
+                            var booleanCeils = value;
+                            var collection = new ObservableCollection<bool>();
+                            foreach (var ceil in booleanCeils)
+                                collection.Add(ceil.Value);
+                            multipleBooleanValue = collection;
+                            OnPropertyChanged("MultipleBooleanValue");
+                        }*/
         }
 
         // Специфичные поля
@@ -190,7 +217,7 @@ namespace Modbus.Model.ModbusRtuFuncs
         }
         public void Send(DeviceModel device, bool isRTU = true)
         {
-            UpdateTableValues(); // Очищаем таблицу значений
+            //UpdateTableValues(); // Очищаем таблицу значений
 
             var message = GenerateResultMessage(Name);
 
@@ -223,7 +250,7 @@ namespace Modbus.Model.ModbusRtuFuncs
                 LastLogs = message;
                 return;
             }
-            
+
             SendMessage(device, master, ref message, isRTU);
 
             LastLogs = message;
@@ -233,14 +260,36 @@ namespace Modbus.Model.ModbusRtuFuncs
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                TableValues.Clear();
+                // Ноовое содержимое таблицы
+                List<UniversalCeil> ceils = new List<UniversalCeil>();
+
                 if (BooleanValues != null)
                     foreach (var ceil in BooleanValues)
-                        TableValues.Add(new UniversalCeil(ceil.Address, ceil.Value.ToString()));
+                        ceils.Add(new UniversalCeil(ceil.Address, ceil.Value.ToString()));
                 else if (UInt16Values != null)
                     foreach (var ceil in UInt16Values)
-                        TableValues.Add(new UniversalCeil(ceil.Address, ceil.Value.ToString()));
-                OnPropertyChanged("TableValues");
+                        ceils.Add(new UniversalCeil(ceil.Address, ceil.Value.ToString()));
+
+                // Удаляем лишние строки
+                if (TableValues.Count > ceils.Count)
+                    for (var i = TableValues.Count - 1; i > ceils.Count - 1; i--)
+                        TableValues.RemoveAt(i);
+
+                // Переписываем или добавляем строки
+                for (var i = 0; i < ceils.Count(); i++)
+                    if (TableValues.Count() <= i)
+                        TableValues.Add(ceils.ElementAt(i));
+                    else
+                    {
+                        var line     = TableValues.ElementAt(i);
+                        var newLine  = ceils.ElementAt(i);
+
+                        line.Address = newLine.Address;
+                        line.Value   = newLine.Value.ToString();
+                    }
+
+                // Посылаем уведомление об обновлении
+                //OnPropertyChanged("TableValues");
             });
         }
         public virtual void SendMessage(DeviceModel device, ModbusSerialMaster master, ref string message, bool isRTU = true) => message += "Метод не переопределён!";

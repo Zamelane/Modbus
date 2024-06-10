@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Modbus.Device;
+using Modbus.Model.Helpers;
 using Modbus.Model.Involucres;
 
 namespace Modbus.Model.ModbusRtuFuncs

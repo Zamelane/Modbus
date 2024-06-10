@@ -56,6 +56,7 @@
                     Orientation="Horizontal" Cursor="">
             <ComboBox     Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding Devices}" DisplayMemberPath="Name" SelectedItem="{Binding SelectDevice}" adonisExtensions:CornerRadiusExtension.CornerRadius="5" IsEnabled="{c:Binding !RepeatIsRunning and !SendIsRunning}" Cursor="Hand"/>
             <ComboBox     Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding Funcs}" DisplayMemberPath="SpecificName" SelectedItem="{Binding SelectFunc}" adonisExtensions:CornerRadiusExtension.CornerRadius="5" Cursor="Hand" IsEnabled="{c:Binding !RepeatIsRunning and !SendIsRunning}"/>
+            <ComboBox     Style="{StaticResource ComboBoxStyle}" Width="75" ItemsSource="{Binding ProtocolTypes}" SelectedValue="{Binding SelectedProtocol}" adonisExtensions:CornerRadiusExtension.CornerRadius="5" Cursor="Hand" IsEnabled="{c:Binding !RepeatIsRunning and !SendIsRunning}"/>
             <TextBox      Style="{StaticResource TextBoxStyle}"  Text="{Binding RepeatMs}" adonisExtensions:WatermarkExtension.Watermark="Частота запроса в ms" adonisExtensions:CornerRadiusExtension.CornerRadius="5" IsEnabled="{c:Binding !RepeatIsRunning and !SendIsRunning}" Cursor="Hand"/>
             <ToggleButton Style="{StaticResource ToggleButtonStyle}" Width="80" Content="{c:Binding (RepeatIsRunning?\'Остановить\':\'Запустить\')}" adonisExtensions:CornerRadiusExtension.CornerRadius="5" IsEnabled="{c:Binding !SendIsRunning}" Cursor="Hand" Click="RepeatSendButton_Click"/>
         </StackPanel>

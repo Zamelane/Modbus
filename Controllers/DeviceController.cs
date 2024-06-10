@@ -35,7 +35,7 @@ namespace Modbus.Controllers
         public bool CheckDeviceAvailability(DeviceModel checkDevice)
         {
             foreach (var device in devices)
-                if (device.Id == checkDevice.Id)
+                if (device.Id == checkDevice.Id && device.SerialPortModel == checkDevice.SerialPortModel)
                     return true;
             return false;
         }
