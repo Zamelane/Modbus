@@ -50,7 +50,6 @@ namespace Modbus
                     try
                     {
                         _controller.SelectFunc.Send(_controller.SelectDevice);
-                        _controller.SendIsRunning = false;
                     }
                     finally
                     {
