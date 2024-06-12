@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Modbus.Helpers;
-using Newtonsoft.Json.Linq;
 
 namespace Modbus.Model
 {

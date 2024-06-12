@@ -132,17 +132,13 @@
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition/>
                         <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     <Button Padding="7"
-                            adonisExtensions:CornerRadiusExtension.CornerRadius="5">
+                            adonisExtensions:CornerRadiusExtension.CornerRadius="5"
+                            Click="ClearLogsButton_Click">
                         <Image Source="../Image/clear.png"
                                Width="20"/>
                     </Button>
-                    <Button Grid.Column="2"
-                            adonisExtensions:CornerRadiusExtension.CornerRadius="5"
-                            Content="Логи"
-                            Margin="0,0,7,0"/>
                     <Button Grid.Column="3"
                             Click="OneSendButton_Click"
                             adonisExtensions:CornerRadiusExtension.CornerRadius="5"

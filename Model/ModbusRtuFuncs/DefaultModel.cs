@@ -72,19 +72,15 @@ namespace Modbus.Model.ModbusRtuFuncs
         private ObservableCollection<bool> multipleBooleanValue = new ObservableCollection<bool>() { true };
 
         // Результаты работы
-        private List<string> logs = new List<string>();
-        public int logsIndex = -1;
-        public ObservableCollection<UInt16Ceil> UInt16Result { get; set; } = new ObservableCollection<UInt16Ceil>();
-        public ObservableCollection<BooleanCeil> BooleanResult { get; set; } = new ObservableCollection<BooleanCeil>();
+        private string logs = "";
         public ObservableCollection<UniversalCeil> TableValues { get; set; } = new ObservableCollection<UniversalCeil>();
 
         public string LastLogs
         {
-            get => logs.LastOrDefault();
+            get => logs;
             set
             {
-                logs.Add(value);
-                logsIndex = logs.Count - 1;
+                logs = value;
                 OnPropertyChanged("LastLogs");
             }
         }
@@ -294,5 +290,10 @@ namespace Modbus.Model.ModbusRtuFuncs
         }
         public virtual void SendMessage(DeviceModel device, ModbusSerialMaster master, ref string message, bool isRTU = true) => message += "Метод не переопределён!";
         public string GenerateResultMessage(string message) => $"[{DateTime.Now.ToString()}] {message}\n";
+        public void ClearLogs()
+        {
+            LastLogs = "";
+            TableValues.Clear();
+        }
     }
 }

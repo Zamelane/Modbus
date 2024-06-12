@@ -115,5 +115,7 @@ namespace Modbus
                 _controller.RepeatIsRunning = false;
             }
         }
+
+        private void ClearLogsButton_Click(object sender, RoutedEventArgs e) => _controller.SelectFunc.ClearLogs();
     }
 }
