@@ -96,6 +96,19 @@ namespace Modbus.Model
                 OnPropertyChanged("WriteTimeout");
             }
         }
+        public bool IsOpen
+        {
+            get
+            {
+                if (_sr.IsOpen) return true;
+                try
+                {
+                    _sr.Open();
+                    _sr.Close();
+                    return false;
+                } catch { return true; }
+            }
+        }
 
         public SerialPortModel(string portName)
         {

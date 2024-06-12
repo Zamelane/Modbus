@@ -8,6 +8,7 @@
         xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
         xmlns:adonisControls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
         xmlns:adonisExtensions="clr-namespace:AdonisUI.Extensions;assembly=AdonisUI"
+        xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
         Title="Редактирование modbus-устройства"
         MinHeight="250" MinWidth="250"
         Height="250" Width="250"
@@ -40,8 +41,21 @@
                         <ComboBox Grid.Column="2"
                                   x:Name="SelectedPort"
                                   ItemsSource="{Binding _controller.Ports}"
-                                  SelectedItem="{Binding Device.SerialPortModel}"
-                                  DisplayMemberPath="Name"/>
+                                  SelectedItem="{Binding Device.SerialPortModel}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="5"/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Content="{Binding Path=Name}"/>
+                                        <Ellipse Width="10" Height="10" Fill="{c:Binding (IsOpen?\'green\':\'red\')}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                         <Grid.ToolTip>
                             <ToolTip>
                                 Порт, через который будет происходить общение с modbus устройством.

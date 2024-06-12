@@ -8,6 +8,7 @@
         xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
         xmlns:adonisControls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
         xmlns:adonisExtensions="clr-namespace:AdonisUI.Extensions;assembly=AdonisUI"
+        xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
         Title="Настрока COM-портов"
         MinHeight="330" MinWidth="300"
         MaxHeight="330" MaxWidth="300" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow"
@@ -124,7 +125,10 @@
                      SelectedItem="{Binding SelectPort}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Label Content="{Binding Path=Name}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{Binding Path=Name}" Margin="0,0,5,0"/>
+                            <Ellipse Width="10" Height="10" Fill="{c:Binding (IsOpen?\'green\':\'red\')}"/>
+                        </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

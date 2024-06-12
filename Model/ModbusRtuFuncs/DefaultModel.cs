@@ -242,7 +242,7 @@ namespace Modbus.Model.ModbusRtuFuncs
             }
             catch
             {
-                message += $"Ошибка создания мастера на порту \"{device.SerialPortModel.Name}\"";
+                message += $"Ошибка создания мастера ({(isRTU ? "RTU" : "ASCII")}) на порту \"{device.SerialPortModel.Name}\"";
                 LastLogs = message;
                 return;
             }
@@ -250,7 +250,6 @@ namespace Modbus.Model.ModbusRtuFuncs
             SendMessage(device, master, ref message, isRTU);
 
             LastLogs = message;
-            port.Close();
         }
         public void UpdateTableValues(List<UInt16Ceil> UInt16Values = null, List<BooleanCeil> BooleanValues = null)
         {

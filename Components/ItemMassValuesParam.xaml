@@ -2,7 +2,8 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:adonisExtensions="clr-namespace:AdonisUI.Extensions;assembly=AdonisUI"
              xmlns:local="clr-namespace:Modbus.Components"
              mc:Ignorable="d"
              xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding">
@@ -46,8 +47,8 @@
         <StackPanel Orientation="Horizontal"
                 HorizontalAlignment="Right"
                 Grid.Row="4">
-            <Button Content="+" Margin="0,0,5,0" Width="25" Cursor="Hand" Click="AddMassValue_Click"/>
-            <Button Content="-" Width="25" Cursor="Hand" Click="RemoveMassValue_Click"/>
+            <Button Content="+" Margin="0,0,5,0" Width="25" Cursor="Hand" Click="AddMassValue_Click" adonisExtensions:CornerRadiusExtension.CornerRadius="5"/>
+            <Button Content="-" Width="25" Cursor="Hand" Click="RemoveMassValue_Click" adonisExtensions:CornerRadiusExtension.CornerRadius="5"/>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -54,6 +54,7 @@ namespace Modbus
                     finally
                     {
                         _controller.SendIsRunning = false;
+                        ClosePort();
                     }
                 }, new CancellationToken(), TaskCreationOptions.LongRunning, TaskScheduler.Default);
             }
@@ -94,6 +95,7 @@ namespace Modbus
                             if (_taskController.IsCancellationRequested)
                             {
                                 _controller.RepeatIsRunning = false;
+                                ClosePort();
                                 break;
                             }
                             // Иначе отправляем сообщение
@@ -113,9 +115,11 @@ namespace Modbus
                 _taskController.Cancel();
                 _task.Dispose();
                 _controller.RepeatIsRunning = false;
+                ClosePort();
             }
         }
 
         private void ClearLogsButton_Click(object sender, RoutedEventArgs e) => _controller.SelectFunc.ClearLogs();
+        private void ClosePort() => _controller.SelectDevice.SerialPortModel.GetSerialPort().Close();
     }
 }

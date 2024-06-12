@@ -12,9 +12,9 @@
         xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
         Icon="../Image/rs-485.png"
         Title="SerialPort RS-485"
-        Height="450" Width="800"
-        MaxHeight="700" MaxWidth="1100"
-        MinHeight="350" MinWidth="700"
+        Height="450" Width="795"
+        MaxHeight="1400" MaxWidth="1100"
+        MinHeight="350" MinWidth="795"
         adonisExtensions:CursorSpotlightExtension.RelativeSpotlightSize="0.25">
     <Window.Resources>
         <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
@@ -56,7 +56,7 @@
             </MenuItem>
         </Menu>
         <StackPanel Grid.Row="1"
-                    Orientation="Horizontal" Cursor="">
+                    Orientation="Horizontal" Cursor="" Height="43">
             <ComboBox     Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding Devices}" DisplayMemberPath="Name" SelectedItem="{Binding SelectDevice}" adonisExtensions:CornerRadiusExtension.CornerRadius="5" IsEnabled="{c:Binding !RepeatIsRunning and !SendIsRunning}" Cursor="Hand">
                 <ComboBox.ToolTip>
                     Устройство-получатель запроса
@@ -68,16 +68,24 @@
                 </ComboBox.ToolTip>
             </ComboBox>
             <ComboBox     Style="{StaticResource ComboBoxStyle}" Width="75" ItemsSource="{Binding ProtocolTypes}" SelectedValue="{Binding SelectedProtocol}" adonisExtensions:CornerRadiusExtension.CornerRadius="5" Cursor="Hand" IsEnabled="{c:Binding !RepeatIsRunning and !SendIsRunning}"/>
-            <TextBox      Style="{StaticResource TextBoxStyle}"  Text="{Binding RepeatMs}" adonisExtensions:WatermarkExtension.Watermark="Частота запроса в ms" adonisExtensions:CornerRadiusExtension.CornerRadius="5" IsEnabled="{c:Binding !RepeatIsRunning and !SendIsRunning}" Cursor="Hand">
-                <TextBox.ToolTip>
-                    Интервал между запросами
-                </TextBox.ToolTip>
-            </TextBox>
-            <ToggleButton Style="{StaticResource ToggleButtonStyle}" Width="80" Content="{c:Binding (RepeatIsRunning?\'Остановить\':\'Запустить\')}" adonisExtensions:CornerRadiusExtension.CornerRadius="5" IsEnabled="{c:Binding !SendIsRunning}" Cursor="Hand" Click="RepeatSendButton_Click">
-                <ToggleButton.ToolTip>
-                    Запуск/остановка повторяемой отправки запросов
-                </ToggleButton.ToolTip>
-            </ToggleButton>
+            <GroupBox Padding="0" adonisExtensions:CornerRadiusExtension.CornerRadius="5" Margin="0,2">
+                <GroupBox.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Интервальные запросы" VerticalAlignment="Center" Margin="5,0" Cursor=""/>
+                        <Rectangle Height="20" Width="1" Stroke="#272730" adonisExtensions:CornerRadiusExtension.CornerRadius="5"/>
+                        <TextBox    Style="{StaticResource TextBoxStyle}"  Text="{Binding RepeatMs}" adonisExtensions:WatermarkExtension.Watermark="Частота запроса в ms" adonisExtensions:CornerRadiusExtension.CornerRadius="5" IsEnabled="{c:Binding !RepeatIsRunning and !SendIsRunning}" Cursor="Hand">
+                            <TextBox.ToolTip>
+                                Интервал между запросами
+                            </TextBox.ToolTip>
+                        </TextBox>
+                        <ToggleButton Style="{StaticResource ToggleButtonStyle}" Width="80" Content="{c:Binding (RepeatIsRunning?\'Остановить\':\'Запустить\')}" adonisExtensions:CornerRadiusExtension.CornerRadius="5" IsEnabled="{c:Binding !SendIsRunning}" Cursor="Hand" Click="RepeatSendButton_Click">
+                            <ToggleButton.ToolTip>
+                                Запуск/остановка повторяемой отправки запросов
+                            </ToggleButton.ToolTip>
+                        </ToggleButton>
+                    </StackPanel>
+                </GroupBox.Content>
+            </GroupBox>
         </StackPanel>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
@@ -115,8 +123,8 @@
                     <ComboBox Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding ViewTypes}" SelectedItem="{Binding SelectViewType}" adonisExtensions:CornerRadiusExtension.CornerRadius="5" Cursor="Hand"/>
                 </StackPanel>
                 <Grid Grid.Row="1" Margin="0,0,0,4">
-                    <TextBox IsReadOnly="True" VerticalContentAlignment="Top" Text="{Binding SelectFunc.LastLogs}" TextWrapping="WrapWithOverflow" Visibility="{c:Binding !IsViewTypeTable}"/>
-                    <GroupBox Padding="0" BorderThickness="1" BorderBrush="#262630" Visibility="{c:Binding IsViewTypeTable}">
+                    <TextBox IsReadOnly="True" VerticalContentAlignment="Top" Text="{Binding SelectFunc.LastLogs}" TextWrapping="WrapWithOverflow" Visibility="{c:Binding !IsViewTypeTable}" adonisExtensions:CornerRadiusExtension.CornerRadius="5" Cursor=""/>
+                    <GroupBox Padding="0" BorderThickness="1" BorderBrush="#262630" Visibility="{c:Binding IsViewTypeTable}" adonisExtensions:CornerRadiusExtension.CornerRadius="5">
                         <DataGrid
                             AutoGenerateColumns="False"
                             ItemsSource="{Binding SelectFunc.TableValues}">
@@ -143,7 +151,6 @@
                             Click="OneSendButton_Click"
                             adonisExtensions:CornerRadiusExtension.CornerRadius="5"
                             Content="Отправить 1 раз"
-                            Margin="0,0,7,0"
                             IsEnabled="{c:Binding !RepeatIsRunning and !SendIsRunning}"/>
                 </Grid>
             </Grid>
