@@ -51,7 +51,7 @@
                                             <ColumnDefinition Width="auto"/>
                                         </Grid.ColumnDefinitions>
                                         <Label Content="{Binding Path=Name}"/>
-                                        <Ellipse Width="10" Height="10" Fill="{c:Binding (IsOpen?\'green\':\'red\')}"/>
+                                        <Ellipse Width="10" Height="10" Fill="{c:Binding (IsOpen?\'red\':\'green\')}"/>
                                     </Grid>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
