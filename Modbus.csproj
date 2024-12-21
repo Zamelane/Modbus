@@ -206,6 +206,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -232,6 +233,16 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="rs-485.ico" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="_imgs\1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="_imgs\2.png" />
+    <Resource Include="_imgs\3.png" />
+    <Resource Include="_imgs\4.png" />
+    <Resource Include="_imgs\5.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
